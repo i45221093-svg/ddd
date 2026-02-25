@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<title>TezIsh.uz - Ish e'lonlari</title>
+<style>
+body { font-family: Arial; margin:0; background:#f0f4f8; }
+header { background:#1d72b8; color:white; padding:25px; text-align:center; font-size:24px; }
+.container { width:90%; max-width:900px; margin:20px auto; }
+.search-box { margin-bottom:25px; display:flex; justify-content:center; }
+input[type="text"] { width:60%; padding:10px; border-radius:5px; border:1px solid #ccc; }
+button { padding:10px 20px; margin-left:10px; border:none; border-radius:5px; background:#1d72b8; color:white; cursor:pointer; }
+.job-card { background:white; padding:20px; margin-bottom:15px; border-radius:8px; box-shadow:0 4px 6px rgba(0,0,0,0.1); cursor:pointer; transition:0.3s; }
+.job-card:hover { transform:translateY(-3px); box-shadow:0 6px 10px rgba(0,0,0,0.15); }
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); justify-content:center; align-items:center; }
+.modal-content { background:white; padding:25px; border-radius:8px; width:90%; max-width:500px; position:relative; }
+.close { position:absolute; top:10px; right:15px; font-weight:bold; font-size:20px; cursor:pointer; }
+.category { margin-bottom:15px; text-align:center; }
+.category button { margin:0 5px; padding:8px 12px; border:none; border-radius:5px; cursor:pointer; background:#e0e0e0; }
+.category button.active { background:#1d72b8; color:white; }
+</style>
+</head>
+<body>
+
+<header>TezIsh.uz - Ish E'lonlari</header>
+
+<div class="container">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Kasb nomini yozing...">
+    <button onclick="searchJobs()">Qidirish</button>
+  </div>
+
+  <div class="category">
+    <button class="active" onclick="filterCategory('all')">Barchasi</button>
+    <button onclick="filterCategory('haydovchi')">Haydovchi</button>
+    <button onclick="filterCategory('ofis')">Ofis</button>
+    <button onclick="filterCategory('qurilish')">Qurilish</button>
+    <button onclick="filterCategory('talaba')">Talaba</button>
+  </div>
+
+  <!-- Ish e'lonlari -->
+  <div class="job-card" data-category="haydovchi" onclick="openModal('Haydovchi kerak', 'Oylik: 4 000 000 so‘m', 'Tel: 90 123 45 67')">
+    <h3>Haydovchi kerak</h3>
+    <p>Oylik: 4 000 000 so‘m</p>
+  </div>
+  <div class="job-card" data-category="ofis" onclick="openModal('Ofis xodimi', 'Oylik: 3 000 000 so‘m', 'Tel: 91 234 56 78')">
+    <h3>Ofis xodimi</h3>
+    <p>Oylik: 3 000 000 so‘m</p>
+  </div>
+  <div class="job-card" data-category="qurilish" onclick="openModal('Qurilish ishchisi', 'Oylik: 5 000 000 so‘m', 'Tel: 92 345 67 89')">
+    <h3>Qurilish ishchisi</h3>
+    <p>Oylik: 5 000 000 so‘m</p>
+  </div>
+  <div class="job-card" data-category="talaba" onclick="openModal('Talaba yordamchi', 'Oylik: 2 500 000 so‘m', 'Tel: 93 456 78 90')">
+    <h3>Talaba yordamchi</h3>
+    <p>Oylik: 2 500 000 so‘m</p>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="jobModal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2 id="modalTitle"></h2>
+    <p id="modalSalary"></p>
+    <p id="modalContact"></p>
+  </div>
+</div>
+
+<script>
+function openModal(title, salary, contact){
+  document.getElementById('modalTitle').innerText = title;
+  document.getElementById('modalSalary').innerText = salary;
+  document.getElementById('modalContact').innerText = contact;
+  document.getElementById('jobModal').style.display = 'flex';
+}
+
+function closeModal(){
+  document.getElementById('jobModal').style.display = 'none';
+}
+
+function searchJobs(){
+  let input = document.getElementById('searchInput').value.toLowerCase();
+  let cards = document.getElementsByClassName('job-card');
+  for(let i=0;i<cards.length;i++){
+    let title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+    if(title.includes(input)){ cards[i].style.display='block'; } 
+    else{ cards[i].style.display='none'; }
+  }
+}
+
+function filterCategory(cat){
+  let buttons = document.querySelectorAll('.category button');
+  buttons.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+
+  let cards = document.getElementsByClassName('job-card');
+  for(let i=0;i<cards.length;i++){
+    if(cat=='all' || cards[i].dataset.category==cat){ cards[i].style.display='block'; }
+    else{ cards[i].style.display='none'; }
+  }
+}
+</script>
+
+</body>
+</html>
+</body>
+</html>
